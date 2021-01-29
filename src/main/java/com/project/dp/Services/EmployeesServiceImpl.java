@@ -35,7 +35,7 @@ public class EmployeesServiceImpl implements EmployeesService{
 
     @Override
     public Employees addEmployee(Employees employee) throws EmployeeAlreadyExistsException {
-        if (this.employeesRepository.findByName(employee.getFirstName(),employee.getLastName()) != null){
+        if (this.employeesRepository.findByFirstName(employee.getFirstName()) != null && this.employeesRepository.findByLastName(employee.getLastName()) != null){
             throw new EmployeeAlreadyExistsException();
         }
         return this.employeesRepository.save(employee);

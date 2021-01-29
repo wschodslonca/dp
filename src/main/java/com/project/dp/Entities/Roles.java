@@ -14,7 +14,7 @@ import javax.persistence.*;
 @ToString
 @Table(name = "Roles")
 
-public class Roles {
+public class Roles{
 
     @Id
     @NotNull
