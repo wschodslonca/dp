@@ -21,7 +21,7 @@ public class Employees {
     private Long employeeId;
 
     @NotNull
-    private Long firstName;
+    private String firstName;
 
     @NotNull
     private String lastName;
