@@ -53,4 +53,9 @@ public class RolesServiceImpl implements RolesService{
             this.rolesRepository.delete(role);
         }
     }
+
+    @Override
+    public List<Roles> findAllByParentId(Long parentId) {
+        return this.rolesRepository.findAllByParentId(parentId);
+    }
 }

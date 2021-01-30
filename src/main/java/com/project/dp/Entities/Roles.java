@@ -23,4 +23,7 @@ public class Roles{
 
     @NotNull
     private String roleName;
+
+    @NotNull
+    private Long parentId;
 }

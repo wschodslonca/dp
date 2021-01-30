@@ -10,4 +10,5 @@ public interface UsersService {
     List<Users> getAllUsers();
     Users addUser(Users user);
     void deleteUser(Long userId);
+    List<Users> findAllByRoleId(Long roleId);
 }

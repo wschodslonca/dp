@@ -53,4 +53,10 @@ public class UsersServiceImpl implements UsersService{
             this.usersRepository.delete(user);
         }
     }
+
+    @Override
+    public List<Users> findAllByRoleId(Long roleId) {
+        return this.usersRepository.findAllByRoleId(roleId);
+    }
+
 }

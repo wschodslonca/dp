@@ -10,4 +10,5 @@ public interface RolesService {
     List<Roles> getAllRoles();
     Roles addRole(Roles role);
     void deleteRole(Long roleId);
+    List<Roles> findAllByParentId(Long parentId);
 }
