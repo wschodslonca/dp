@@ -1,3 +1,8 @@
+DELETE FROM public.employees;
+DELETE FROM public.salaries;
+DELETE FROM public.roles;
+DELETE FROM public.acl;
+DELETE FROM public.users;
 INSERT INTO public.employees(employee_id,first_name,last_name) VALUES (1,'Jan','Kowalski');
 INSERT INTO public.employees(employee_id,first_name,last_name) VALUES (2,'Krzysztof','Nowak');
 INSERT INTO public.employees(employee_id,first_name,last_name) VALUES (3,'Maria','Kowalska');
