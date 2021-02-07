@@ -3,7 +3,7 @@ package com.project.dp.Services;
 import com.project.dp.Entities.Users;
 import com.project.dp.Exceptions.Classes.NoSuchUserException;
 import com.project.dp.Exceptions.Classes.UserAlreadyExistsException;
-import com.project.dp.Repositories.UsersRepository;
+import com.project.dp.Dao.UsersDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,16 +13,16 @@ import java.util.Optional;
 @Service
 public class UsersServiceImpl implements UsersService{
 
-    private final UsersRepository usersRepository;
+    private final UsersDao usersDao;
 
     @Autowired
-    public UsersServiceImpl(UsersRepository usersRepository) {
-        this.usersRepository = usersRepository;
+    public UsersServiceImpl(UsersDao usersDao) {
+        this.usersDao = usersDao;
     }
 
     @Override
     public Users getUser(Long userId) throws NoSuchUserException{
-        Optional<Users> userOptional = this.usersRepository.findById(userId);
+        Optional<Users> userOptional = this.usersDao.findById(userId);
         if (userOptional.isEmpty()){
             throw new NoSuchUserException();
         }
@@ -31,32 +31,32 @@ public class UsersServiceImpl implements UsersService{
 
     @Override
     public List<Users> getAllUsers() {
-        return this.usersRepository.findAll();
+        return this.usersDao.findAll();
     }
 
     @Override
     public Users addUser(Users user) throws UserAlreadyExistsException {
-        if (this.usersRepository.findByLogin(user.getLogin()) != null){
+        if (this.usersDao.findByLogin(user.getLogin()) != null){
             throw new UserAlreadyExistsException();
         }
-        return this.usersRepository.save(user);
+        return this.usersDao.save(user);
     }
 
     @Override
     public void deleteUser(Long userId) throws NoSuchUserException {
-        Optional<Users> userOptional = this.usersRepository.findById(userId);
+        Optional<Users> userOptional = this.usersDao.findById(userId);
         if (userOptional.isEmpty()){
             throw new NoSuchUserException();
         }
         else{
             Users user = userOptional.get();
-            this.usersRepository.delete(user);
+            this.usersDao.delete(user);
         }
     }
 
     @Override
     public List<Users> findAllByRoleId(Long roleId) {
-        return this.usersRepository.findAllByRoleId(roleId);
+        return this.usersDao.findAllByRoleId(roleId);
     }
 
 }

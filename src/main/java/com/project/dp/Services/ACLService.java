@@ -7,6 +7,7 @@ import java.util.List;
 public interface ACLService {
     ACL getACL(Long aclId);
     List<ACL> getAllACL();
-    ACL addACL(ACL acl);
+    void save(Long userId, String table, Long record);
     void deleteACL(Long aclId);
+    public void delete(Long userId, String table, Long record);
 }

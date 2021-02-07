@@ -3,7 +3,7 @@ package com.project.dp.Services;
 import com.project.dp.Entities.Employees;
 import com.project.dp.Exceptions.Classes.NoSuchEmployeeException;
 import com.project.dp.Exceptions.Classes.EmployeeAlreadyExistsException;
-import com.project.dp.Repositories.EmployeesRepository;
+import com.project.dp.Dao.EmployeesDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +12,16 @@ import java.util.Optional;
 
 @Service
 public class EmployeesServiceImpl implements EmployeesService{
-    private final EmployeesRepository employeesRepository;
+    private final EmployeesDao employeesDao;
 
     @Autowired
-    public EmployeesServiceImpl(EmployeesRepository employeesRepository) {
-        this.employeesRepository = employeesRepository;
+    public EmployeesServiceImpl(EmployeesDao employeesDao) {
+        this.employeesDao = employeesDao;
     }
 
     @Override
     public Employees getEmployee(Long employeeId) throws NoSuchEmployeeException {
-        Optional<Employees> employeeOptional = this.employeesRepository.findById(employeeId);
+        Optional<Employees> employeeOptional = this.employeesDao.findById(employeeId);
         if (employeeOptional.isEmpty()){
             throw new NoSuchEmployeeException();
         }
@@ -30,26 +30,26 @@ public class EmployeesServiceImpl implements EmployeesService{
 
     @Override
     public List<Employees> getAllEmployees() {
-        return this.employeesRepository.findAll();
+        return this.employeesDao.findAll();
     }
 
     @Override
     public Employees addEmployee(Employees employee) throws EmployeeAlreadyExistsException {
-        if (this.employeesRepository.findByFirstName(employee.getFirstName()) != null && this.employeesRepository.findByLastName(employee.getLastName()) != null){
+        if (this.employeesDao.findByFirstName(employee.getFirstName()) != null && this.employeesDao.findByLastName(employee.getLastName()) != null){
             throw new EmployeeAlreadyExistsException();
         }
-        return this.employeesRepository.save(employee);
+        return this.employeesDao.save(employee);
     }
 
     @Override
     public void deleteEmployee(Long employeeId) throws NoSuchEmployeeException {
-        Optional<Employees> employeeOptional = this.employeesRepository.findById(employeeId);
+        Optional<Employees> employeeOptional = this.employeesDao.findById(employeeId);
         if (employeeOptional.isEmpty()){
             throw new NoSuchEmployeeException();
         }
         else{
             Employees employee = employeeOptional.get();
-            this.employeesRepository.delete(employee);
+            this.employeesDao.delete(employee);
         }
     }
 }
