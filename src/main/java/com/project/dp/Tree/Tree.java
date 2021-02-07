@@ -15,6 +15,7 @@ import java.util.List;
 @Component
 public class Tree {
 
+    private static final Long NULL_PARENT  = 0L;
     ACLService aclService;
     RolesService rolesService;
     UsersService usersService;
@@ -28,7 +29,7 @@ public class Tree {
     }
 
     public void loadTree() {
-        List<Roles> initSearch = this.rolesService.findAllByParentId(0L);
+        List<Roles> initSearch = this.rolesService.findAllByParentId(NULL_PARENT);
         if (initSearch.size()==1) {
             Roles initRole = initSearch.get(0);
             this.root = new TreeRole(null,initRole);

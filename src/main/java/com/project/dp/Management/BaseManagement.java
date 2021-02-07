@@ -6,18 +6,20 @@ import com.project.dp.Exceptions.Classes.NoSuchRoleException;
 import com.project.dp.Exceptions.Classes.NoSuchUserException;
 import com.project.dp.Exceptions.Classes.RoleAlreadyExistsException;
 import com.project.dp.Exceptions.Classes.UserAlreadyExistsException;
-import com.project.dp.Services.ACLService;
 import com.project.dp.Services.RolesService;
 import com.project.dp.Services.UsersService;
 import com.project.dp.Tree.Tree;
-import com.project.dp.Tree.TreeUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BaseManagement extends Management{
 
     @Autowired
     UsersService usersService;
     RolesService rolesService;
+
+    @Autowired
     public BaseManagement(Tree tree) {
         super(tree);
     }
@@ -58,5 +60,8 @@ public class BaseManagement extends Management{
         }catch (NoSuchRoleException e){
             System.out.println("No such role in database");
         }
+    }
+    public void printTree() {
+        tree.printTree();
     }
 }

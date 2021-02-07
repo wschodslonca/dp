@@ -1,11 +1,9 @@
 package com.project.dp;
 
-import com.project.dp.Dao.UsersDao;
 import com.project.dp.Entities.Users;
-import com.project.dp.Services.UsersServiceImpl;
-import com.project.dp.Sessions.AdminSession;
+import com.project.dp.Services.UsersService;
 import com.project.dp.Sessions.Session;
-import com.project.dp.Sessions.UserSession;
+import com.project.dp.Sessions.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,26 +12,32 @@ import java.util.Scanner;
 @Component
 public class Authentication {
 
-    @Autowired
-    private final UsersServiceImpl usersService;
+    private static final int ADMIN_ROLE = 1;
+    private final SessionFactory sessionFactory;
+    private final UsersService usersService;
 
-    public Authentication(UsersServiceImpl usersService){
+
+    @Autowired
+    public Authentication(SessionFactory sessionFactory, UsersService usersService) {
+        this.sessionFactory = sessionFactory;
         this.usersService = usersService;
     }
 
     public Session login() {
-        Scanner sc= new Scanner(System.in);
+        //Scanner sc= new Scanner(System.in);
         System.out.println("login:");
-        String login = sc.nextLine();
+        //String login = sc.nextLine();
+        String login = "mkowalska";
         Users user = usersService.findByLogin(login);
         System.out.println("passwd:");
-        String passwd = sc.nextLine();
+        //String passwd = sc.nextLine();
+        String passwd = "password1";
         if (user.getPassword().equals(passwd)){
-            if (user.getRoleId() == 1){
-                return new AdminSession(user);
+            if (user.getRoleId() == ADMIN_ROLE){
+                return sessionFactory.getAdminSession(user);
             }
             else{
-                return new UserSession(user);
+                return sessionFactory.getUserSession(user);
             }
         }
         else{

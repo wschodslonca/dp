@@ -13,8 +13,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 public class DpApplication implements CommandLineRunner {
 
 	@Autowired
-	Tree tree;
-	@Autowired
 	Authentication auth;
 
 	public static void main(String args[]) {
@@ -23,10 +21,6 @@ public class DpApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		tree.loadTree();
-		tree.printTree();
-		tree.searchTreeByRole(4L).gainAccess("salaries",3L);
-		tree.searchTreeByRole(1L).revokeOneAccess("salaries",3L);
 		Session session = auth.login();
 		session.run();
 	}

@@ -14,7 +14,8 @@ public enum ExceptionMessages {
     NO_SUCH_ACL("No such acl rule in ACL table"),
     USER_ALREADY_EXISTS("User already exists"),
     EMPLOYEE_ALREADY_EXISTS("Employee already exists"),
-    ROLE_ALREADY_EXISTS("Role already exists");
+    ROLE_ALREADY_EXISTS("Role already exists"),
+    INVALID_COMMAND("Invalid command");
     @Getter
     @Setter
     private String errorMessage;

@@ -1,11 +1,15 @@
 package com.project.dp.Sessions;
 
 import com.project.dp.Entities.Users;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserSession implements Session{
 
-    private final Users user;
-    public UserSession(Users user) {
+    Users user;
+
+    @Override
+    public void setUser(Users user) {
         this.user = user;
     }
 
