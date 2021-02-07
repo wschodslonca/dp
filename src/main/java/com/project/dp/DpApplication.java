@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @SpringBootApplication
+@EnableAspectJAutoProxy(proxyTargetClass=true)
 public class DpApplication implements CommandLineRunner {
+
 	@Autowired
 	Tree tree;
 
@@ -17,9 +20,6 @@ public class DpApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		tree.loadTree();
-		tree.printTree();
-		tree.searchTreeByRole(4L).gainAccess("salaries",3L);
-		tree.searchTreeByRole(1L).revokeOneAccess("salaries",3L);
+		App.start();
 	}
 }
