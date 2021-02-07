@@ -24,9 +24,9 @@ public class TreeRole implements Node{
     Roles getRole() {
         return this.role;
     }
-    void addChild(Node node) {
-        this.children.add(node);
-    }
+    public void abandonChild(Node node) {this.children.remove(node);}
+    public void setParent(TreeRole role) {this.parent = role;}
+    public void addChild(Node node) { this.children.add(node);}
     List<Node> getChildren() {
         return this.children;
     }

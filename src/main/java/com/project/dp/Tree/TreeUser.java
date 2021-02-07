@@ -19,6 +19,7 @@ public class TreeUser implements Node{
         this.user = user;
     }
     void setRole(TreeRole role) {this.role = role;}
+    TreeRole getRole() {return this.role;}
     Users getUser() {return this.user;}
 
     @Override

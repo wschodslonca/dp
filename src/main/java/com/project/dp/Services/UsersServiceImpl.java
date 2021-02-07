@@ -55,6 +55,11 @@ public class UsersServiceImpl implements UsersService{
     }
 
     @Override
+    public Users findByLogin(String login){
+        return this.usersDao.findByLogin(login);
+    }
+
+    @Override
     public List<Users> findAllByRoleId(Long roleId) {
         return this.usersDao.findAllByRoleId(roleId);
     }

@@ -2,6 +2,8 @@ package com.project.dp.Tree;
 
 import com.project.dp.Entities.Roles;
 import com.project.dp.Entities.Users;
+import com.project.dp.Exceptions.Classes.NoSuchRoleException;
+import com.project.dp.Exceptions.Classes.NoSuchUserException;
 import com.project.dp.Services.ACLService;
 import com.project.dp.Services.RolesService;
 import com.project.dp.Services.UsersService;
@@ -64,7 +66,7 @@ public class Tree {
                 }
             }
         }
-        return null;
+        throw new NoSuchRoleException();
     }
 
     public TreeUser searchTreeByUser(Long id) {
@@ -80,7 +82,7 @@ public class Tree {
                 if (r!=null) return r;
             }
         }
-        return null;
+        throw new NoSuchUserException();
     }
 
     private void addToTree(TreeRole treeRole) {
@@ -104,6 +106,7 @@ public class Tree {
         }
         return null;
     }
+
     private TreeUser searchTreeByUserNode(TreeRole treeRole, Long id) {
         for (Node n : treeRole.getChildren()) {
             if (n instanceof TreeUser) {
@@ -133,4 +136,40 @@ public class Tree {
         }
     }
 
+    public void addUser(Users user){
+        TreeUser treeUser = new TreeUser(aclService);
+        TreeRole role = this.searchTreeByRole(user.getRoleId());
+        treeUser.setUser(user);
+        treeUser.setRole(role);
+        role.addChild(treeUser);
+    }
+
+    public void addRole(Roles role){
+        TreeRole parent = this.searchTreeByRole(role.getParentId());
+        TreeRole treerole = new TreeRole(parent, role);
+        parent.addChild(treerole);
+    }
+
+    public void deleteUser(Long userid){
+        try {
+            TreeUser user = searchTreeByUser(userid);
+            user.getRole().abandonChild(user);
+        }catch (NoSuchUserException e){
+            throw e;
+        }
+    }
+
+    public void deleteRole(Long roleid){
+        try {
+            TreeRole role = searchTreeByRole(roleid);
+            for (Node c : role.getChildren()){
+                if (c instanceof TreeRole){
+                    ((TreeRole) c).setParent(role.getParent());
+                }
+            }
+            role.getParent().abandonChild(role);
+        }catch (NoSuchRoleException e){
+            throw e;
+        }
+    }
 }
