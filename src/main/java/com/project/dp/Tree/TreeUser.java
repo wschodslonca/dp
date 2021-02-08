@@ -1,7 +1,7 @@
 package com.project.dp.Tree;
 
-import com.project.dp.Entities.ACL;
 import com.project.dp.Entities.Users;
+import com.project.dp.Exceptions.Classes.ACLAlreadyExistsException;
 import com.project.dp.Exceptions.Classes.NoSuchACLException;
 import com.project.dp.Services.ACLService;
 
@@ -30,8 +30,10 @@ public class TreeUser implements Node{
 
     @Override
     public void gainOneAccess(String table, Long record) {
-        aclService.save(this.user.getUserId(), table, record);
-        System.out.println("@ user "+this.user.getUserId());
+        try {
+            aclService.save(this.user.getUserId(), table, record);
+            System.out.println("@ user " + this.user.getUserId());
+        }catch (ACLAlreadyExistsException ignored){}
     }
 
     @Override

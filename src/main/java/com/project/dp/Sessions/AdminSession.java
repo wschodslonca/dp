@@ -39,12 +39,18 @@ public class AdminSession implements Session{
         try {
             String[] c = command.split(" ");
             int len = c.length;
+
+            //query
             if (len == 1 && c[0].equals("query")) {
                 System.out.println("query");
             }
+
+            //tree
             else if (len ==1 && c[0].equals("tree")) {
                 this.baseManagement.printTree();
             }
+
+            //access management
             else if (len == 5 && c[0].equals("gainacc") && c[1].equals("-R")) {
                 strategyContext.setStrategy(roleStrategy);
                 strategyContext.gainAccess(Long.parseLong(c[2]),c[3],Long.parseLong(c[4]));
@@ -72,12 +78,27 @@ public class AdminSession implements Session{
                 strategyContext.setStrategy(userStrategy);
                 strategyContext.revokeOneAccess(Long.parseLong(c[3]),c[4],Long.parseLong(c[5]));
             }
+
+            //base management
+            else if (len==5 && c[0].equals("adduser")) {
+                this.baseManagement.addUser(Long.parseLong(c[1]),c[2],c[3],Long.parseLong(c[4]));
+            }
+            else if (len==3 && c[0].equals("addrole")) {
+                this.baseManagement.addRole(Long.parseLong(c[1]),c[2]);
+            }
+            else if (len==2 && c[0].equals("deleteuser")) {
+                this.baseManagement.deleteUser(Long.parseLong(c[1]));
+            }
+            else if (len==2 && c[0].equals("deleterole")) {
+                this.baseManagement.deleteRole(Long.parseLong(c[1]));
+            }
+
+            // failure
             else {
                 throw new InvalidCommandException();
             }
         }
         catch (Exception e) {
-            System.out.println(e.getMessage());
             throw new InvalidCommandException();
         }
     }

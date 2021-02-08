@@ -17,6 +17,8 @@ public class BaseManagement extends Management{
 
     @Autowired
     UsersService usersService;
+
+    @Autowired
     RolesService rolesService;
 
     @Autowired
@@ -25,22 +27,38 @@ public class BaseManagement extends Management{
     }
 
     public void addUser(Long employeeid, String login, String passwd, Long roleid){
-        Users user = Users.builder().employeeId(employeeid).login(login).password(passwd).roleId(roleid).build();
         try {
-            usersService.addUser(user);
-            tree.addUser(user);
+            Users user = Users.builder().employeeId(employeeid).login(login).password(passwd).roleId(roleid).build();
+            if (this.rolesService.getRole(roleid)!=null) {
+                usersService.addUser(user);
+                tree.addUser(user);
+            }
+            else {
+                throw new NoSuchRoleException();
+            }
         }catch (UserAlreadyExistsException e){
             System.out.println("User already in database");
+        }
+        catch (NoSuchRoleException e) {
+            System.out.println("No such role");
         }
     }
 
     public void addRole(Long parentid, String name){
-        Roles role = Roles.builder().parentId(parentid).roleName(name).build();
         try {
-            rolesService.addRole(role);
-            tree.addRole(role);
+            Roles role = Roles.builder().parentId(parentid).roleName(name).build();
+            if (this.rolesService.getRole(parentid)!=null) {
+                rolesService.addRole(role);
+                tree.addRole(role);
+            }
+            else {
+                throw new NoSuchRoleException();
+            }
         }catch (RoleAlreadyExistsException e){
             System.out.println("Role already in database");
+        }
+        catch (NoSuchRoleException e) {
+            System.out.println("No such role");
         }
     }
 
@@ -55,6 +73,7 @@ public class BaseManagement extends Management{
 
     public void deleteRole(Long roleid){
         try{
+
             rolesService.deleteRole(roleid);
             tree.deleteRole(roleid);
         }catch (NoSuchRoleException e){

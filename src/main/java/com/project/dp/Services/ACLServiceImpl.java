@@ -1,6 +1,7 @@
 package com.project.dp.Services;
 
 import com.project.dp.Entities.ACL;
+import com.project.dp.Exceptions.Classes.ACLAlreadyExistsException;
 import com.project.dp.Exceptions.Classes.NoSuchACLException;
 import com.project.dp.Dao.ACLDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +36,17 @@ public class ACLServiceImpl implements ACLService{
 
     @Override
     public void save(Long userId, String table, Long record){
-        ACL acl = new ACL();
-        acl.setUserId(userId);
-        acl.setTabName(table);
-        acl.setRowId(record);
-        this.aclDao.save(acl);
+        Optional<ACL> aclOptional = this.aclDao.findByUserIdAndTabNameAndRowId(userId,table,record);
+        if (aclOptional.isPresent()){
+            throw new ACLAlreadyExistsException();
+        }
+        else {
+            ACL acl = new ACL();
+            acl.setUserId(userId);
+            acl.setTabName(table);
+            acl.setRowId(record);
+            this.aclDao.save(acl);
+        }
     }
 
     @Override
