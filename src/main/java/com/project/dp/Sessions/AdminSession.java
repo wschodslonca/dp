@@ -2,21 +2,13 @@ package com.project.dp.Sessions;
 
 import com.project.dp.Entities.Users;
 import com.project.dp.Exceptions.Classes.InvalidCommandException;
-import com.project.dp.Filter.Filter;
 import com.project.dp.Filter.QueryType;
 import com.project.dp.Management.BaseManagement;
 import com.project.dp.Management.RoleStrategy;
 import com.project.dp.Management.StrategyContext;
 import com.project.dp.Management.UserStrategy;
-import lombok.NoArgsConstructor;
-import org.apache.catalina.User;
-import org.hibernate.jpa.HibernateQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.util.Scanner;
 import java.util.List;
 
@@ -26,9 +18,9 @@ public class AdminSession implements Session{
     Users user;
     private final QueryType queryType;
     private final BaseManagement baseManagement;
-    StrategyContext strategyContext;
-    RoleStrategy roleStrategy;
-    UserStrategy userStrategy;
+    private final StrategyContext strategyContext;
+    private final RoleStrategy roleStrategy;
+    private final UserStrategy userStrategy;
 
     @Autowired
     public AdminSession(BaseManagement baseManagement, StrategyContext strategyContext, RoleStrategy roleStrategy, UserStrategy userStrategy, QueryType queryType) {

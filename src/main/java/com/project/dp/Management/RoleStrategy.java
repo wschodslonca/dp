@@ -4,7 +4,7 @@ import com.project.dp.Tree.Tree;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RoleStrategy extends Management implements AccessManagement {
+public class RoleStrategy extends Management implements AccessManagementStrategy {
     public RoleStrategy(Tree tree) {
         super(tree);
     }

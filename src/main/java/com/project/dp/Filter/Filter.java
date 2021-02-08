@@ -1,14 +1,13 @@
 package com.project.dp.Filter;
 
 import org.springframework.stereotype.Component;
-
 import java.util.*;
 
 @Component
 public class Filter {
 
-    static Set<String> FORBIDDEN_TABLES = new HashSet<>(Arrays.asList("acl", "roles"));
-    static Set<String> KEY_TABLES = new HashSet<>(Arrays.asList("salaries","employees"));
+    static Set<String> FORBIDDEN_TABLES = new HashSet<>(Arrays.asList("acl", "roles","users","public.acl", "public.roles","public.users"));
+    static Set<String> KEY_TABLES = new HashSet<>(Arrays.asList("salaries","employees","public.salaries","public.employees"));
 
     public String filter(String q, Long users_id) {
         QueryBuilder qb = new QueryBuilder();

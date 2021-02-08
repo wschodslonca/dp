@@ -1,7 +1,6 @@
 package com.project.dp;
 
 import com.project.dp.Sessions.Session;
-import com.project.dp.Tree.Tree;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

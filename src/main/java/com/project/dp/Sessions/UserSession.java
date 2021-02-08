@@ -1,11 +1,9 @@
 package com.project.dp.Sessions;
-
 import com.project.dp.Entities.Users;
 import com.project.dp.Exceptions.Classes.InvalidCommandException;
 import com.project.dp.Filter.QueryType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,16 +35,19 @@ public class UserSession implements Session{
 
             //query
             else {
-                List<Object[]> res = queryType.query(command,user.getUserId());
-                int reslen = 0;
-                if (!res.isEmpty()) {
-                    reslen = res.get(0).length;
-                }
-                for (Object[] o: res) {
-                    for (int i=0;i<reslen;i++) {
-                        System.out.print(o[i]+" ");
+                c = command.split(" ");
+                if (c[0].toLowerCase().equals("select")) {
+                    List<Object[]> res = queryType.query(command, user.getUserId());
+                    int reslen = 0;
+                    if (!res.isEmpty()) {
+                        reslen = res.get(0).length;
                     }
-                    System.out.println();
+                    for (Object[] o : res) {
+                        for (int i = 0; i < reslen; i++) {
+                            System.out.print(o[i] + " ");
+                        }
+                        System.out.println();
+                    }
                 }
             }
         }

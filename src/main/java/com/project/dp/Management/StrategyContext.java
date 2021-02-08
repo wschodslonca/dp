@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class StrategyContext {
-    private AccessManagement accessManagement;
+    private AccessManagementStrategy accessManagement;
 
-    public void setStrategy(AccessManagement accessManagement) {
+    public void setStrategy(AccessManagementStrategy accessManagement) {
         this.accessManagement = accessManagement;
     }
 

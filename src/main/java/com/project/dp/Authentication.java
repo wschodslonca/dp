@@ -7,8 +7,6 @@ import com.project.dp.Sessions.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Scanner;
-
 @Component
 public class Authentication {
 
@@ -34,10 +32,10 @@ public class Authentication {
         String passwd = "15latzyje";
         if (user.getPassword().equals(passwd)){
             if (user.getRoleId() == ADMIN_ROLE){
-                return sessionFactory.getAdminSession(user);
+                return sessionFactory.createAdminSession(user);
             }
             else{
-                return sessionFactory.getUserSession(user);
+                return sessionFactory.createUserSession(user);
             }
         }
         else{
