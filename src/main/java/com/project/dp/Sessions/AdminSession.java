@@ -2,25 +2,35 @@ package com.project.dp.Sessions;
 
 import com.project.dp.Entities.Users;
 import com.project.dp.Exceptions.Classes.InvalidCommandException;
+import com.project.dp.Filter.Filter;
 import com.project.dp.Management.BaseManagement;
 import com.project.dp.Management.RoleStrategy;
 import com.project.dp.Management.StrategyContext;
 import com.project.dp.Management.UserStrategy;
 import lombok.NoArgsConstructor;
 import org.apache.catalina.User;
+import org.hibernate.jpa.HibernateQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.Scanner;
+import java.util.List;
 
 @Component
 public class AdminSession implements Session{
 
     Users user;
+    private final Filter f = new Filter();
     private final BaseManagement baseManagement;
     StrategyContext strategyContext;
     RoleStrategy roleStrategy;
     UserStrategy userStrategy;
+
+    @PersistenceContext
+    EntityManager entityManager;
 
     @Autowired
     public AdminSession(BaseManagement baseManagement, StrategyContext strategyContext, RoleStrategy roleStrategy, UserStrategy userStrategy) {
@@ -41,8 +51,21 @@ public class AdminSession implements Session{
             int len = c.length;
 
             //query
-            if (len == 1 && c[0].equals("query")) {
-                System.out.println("query");
+            if (len == 1 && c[0].equals("q")) {
+                Scanner sc = new Scanner(System.in);
+
+                Query q = entityManager.createNativeQuery(f.filter(sc.nextLine(),user.getUserId()));
+                List<Object[]> res = q.getResultList();
+                int reslen = 0;
+                if (!res.isEmpty()) {
+                    reslen = res.get(0).length;
+                }
+                for (Object[] o: res) {
+                    for (int i=0;i<reslen;i++) {
+                        System.out.print(o[i]+" ");
+                    }
+                    System.out.println();
+                }
             }
 
             //tree

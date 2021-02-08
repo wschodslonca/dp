@@ -1,0 +1,32 @@
+package com.project.dp.Filter;
+
+public class QueryBuilder {
+    static final String ACL_TAB = "acl";
+    static final String ACL_TAB_NAME = "tab_name";
+    static final String ROW_ID = "row_id";
+    static final String ACL_USER_ID = "user_id";
+    StringBuilder sb;
+    public QueryBuilder() {
+        this.sb = new StringBuilder();
+    }
+
+    public void buildFirstElement(String s) {
+        sb.append(s);
+    }
+    public void buildComponent(String s) {
+        sb.append(" ");
+        sb.append(s);
+    }
+    public void buildSubQuery(String s,Long user_id) {
+        String subq = "(select "+s+".* from "+s+" inner join "+ACL_TAB+" on "+ACL_TAB+"."+ROW_ID+"="+s+"."+ROW_ID+
+                " where "+ACL_TAB+"."+ACL_TAB_NAME+"='"+s+"' and "+ACL_TAB+"."+ACL_USER_ID+"="+user_id.toString()+") as "+s;
+        sb.append(" ");
+        sb.append(subq);
+    }
+    public String build() {
+        sb.append(";");
+        return sb.toString();
+    }
+
+
+}
