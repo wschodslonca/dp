@@ -53,7 +53,6 @@ public class AdminSession implements Session{
             //query
             if (len == 1 && c[0].equals("q")) {
                 Scanner sc = new Scanner(System.in);
-
                 Query q = entityManager.createNativeQuery(f.filter(sc.nextLine(),user.getUserId()));
                 List<Object[]> res = q.getResultList();
                 int reslen = 0;
@@ -114,6 +113,9 @@ public class AdminSession implements Session{
             }
             else if (len==2 && c[0].equals("deleterole")) {
                 this.baseManagement.deleteRole(Long.parseLong(c[1]));
+            }
+            else if (len==1 && c[0].equals("exit")) {
+                System.exit(0);
             }
 
             // failure

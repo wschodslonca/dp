@@ -3,11 +3,11 @@ DELETE FROM public.salaries;
 DELETE FROM public.roles;
 DELETE FROM public.acl;
 DELETE FROM public.users;
-INSERT INTO public.employees(employee_id,first_name,last_name) VALUES (1,'Jan','Kowalski');
-INSERT INTO public.employees(employee_id,first_name,last_name) VALUES (2,'Krzysztof','Nowak');
-INSERT INTO public.employees(employee_id,first_name,last_name) VALUES (3,'Maria','Kowalska');
-INSERT INTO public.employees(employee_id,first_name,last_name) VALUES (4,'Wojciech','Adamiec');
-INSERT INTO public.employees(employee_id,first_name,last_name) VALUES (5,'Katarzyna','Nowakowska');
+INSERT INTO public.employees(row_id,first_name,last_name) VALUES (1,'Jan','Kowalski');
+INSERT INTO public.employees(row_id,first_name,last_name) VALUES (2,'Krzysztof','Nowak');
+INSERT INTO public.employees(row_id,first_name,last_name) VALUES (3,'Maria','Kowalska');
+INSERT INTO public.employees(row_id,first_name,last_name) VALUES (4,'Wojciech','Adamiec');
+INSERT INTO public.employees(row_id,first_name,last_name) VALUES (5,'Katarzyna','Nowakowska');
 
 INSERT INTO public.salaries(row_id,employee_id,salary) VALUES (1,1,10000);
 INSERT INTO public.salaries(row_id,employee_id,salary) VALUES (2,2,5000);
