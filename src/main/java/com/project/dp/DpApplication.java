@@ -20,7 +20,9 @@ public class DpApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Session session = auth.login();
-		session.run();
+		while(true) {
+			Session session = auth.login();
+			session.run();
+		}
 	}
 }

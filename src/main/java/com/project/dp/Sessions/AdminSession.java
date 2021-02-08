@@ -105,7 +105,6 @@ public class AdminSession implements Session{
                 this.baseManagement.deleteRole(Long.parseLong(c[1]));
             }
             else if (len==1 && c[0].equals("exit")) {
-                System.exit(0);
             }
 
             // failure
@@ -122,13 +121,18 @@ public class AdminSession implements Session{
     public void run() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Admin "+user.getLogin()+" Session");
-        while(true) {
+        boolean exit = false;
+        while(!exit) {
             String command = sc.nextLine();
-            try {
-                executeCommand(command);
+            if (!command.equals("exit")) {
+                try {
+                    executeCommand(command);
+                } catch (InvalidCommandException e) {
+                    System.out.println(e.getMessage());
+                }
             }
-            catch(InvalidCommandException e) {
-                System.out.println(e.getMessage());
+            else {
+                exit=true;
             }
         }
     }

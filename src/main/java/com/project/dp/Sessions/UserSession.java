@@ -28,26 +28,18 @@ public class UserSession implements Session{
             String[] c = command.split(" ");
             int len = c.length;
 
-            //exit
-            if (len==1 && c[0].equals("exit")) {
-                System.exit(0);
-            }
-
-            //query
-            else {
-                c = command.split(" ");
-                if (c[0].toLowerCase().equals("select")) {
-                    List<Object[]> res = queryType.query(command, user.getUserId());
-                    int reslen = 0;
-                    if (!res.isEmpty()) {
-                        reslen = res.get(0).length;
+            c = command.split(" ");
+            if (c[0].toLowerCase().equals("select")) {
+                List<Object[]> res = queryType.query(command, user.getUserId());
+                int reslen = 0;
+                if (!res.isEmpty()) {
+                    reslen = res.get(0).length;
+                }
+                for (Object[] o : res) {
+                    for (int i = 0; i < reslen; i++) {
+                        System.out.print(o[i] + " ");
                     }
-                    for (Object[] o : res) {
-                        for (int i = 0; i < reslen; i++) {
-                            System.out.print(o[i] + " ");
-                        }
-                        System.out.println();
-                    }
+                    System.out.println();
                 }
             }
         }
@@ -60,13 +52,18 @@ public class UserSession implements Session{
     public void run() {
         Scanner sc = new Scanner(System.in);
         System.out.println("User "+user.getLogin()+" Session");
-        while(true) {
+        boolean exit = false;
+        while(!exit) {
             String command = sc.nextLine();
-            try {
-                executeCommand(command);
+            if (!command.equals("exit")) {
+                try {
+                    executeCommand(command);
+                } catch (InvalidCommandException e) {
+                    System.out.println(e.getMessage());
+                }
             }
-            catch(InvalidCommandException e) {
-                System.out.println(e.getMessage());
+            else {
+                exit=true;
             }
         }
     }

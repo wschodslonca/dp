@@ -7,6 +7,8 @@ import com.project.dp.Sessions.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Scanner;
+
 @Component
 public class Authentication {
 
@@ -22,25 +24,32 @@ public class Authentication {
     }
 
     public Session login() {
-        //Scanner sc= new Scanner(System.in);
-        System.out.println("login:");
-        //String login = sc.nextLine();
-        String login = "pietnastak";
-        Users user = usersService.findByLogin(login);
-        System.out.println("passwd:");
-        //String passwd = sc.nextLine();
-        String passwd = "15latzyje";
-        if (user.getPassword().equals(passwd)){
-            if (user.getRoleId() == ADMIN_ROLE){
-                return sessionFactory.createAdminSession(user);
+        Users user=null;
+        boolean correctLogin = false;
+        while(!correctLogin) {
+            Scanner sc= new Scanner(System.in);
+            System.out.println("login:");
+            String login = sc.nextLine();
+            //String login = "pietnastak";
+            user = usersService.findByLogin(login);
+            System.out.println("passwd:");
+            String passwd = sc.nextLine();
+            //String passwd = "15latzyje";
+            if (user != null) {
+                if (user.getPassword().equals(passwd)) {
+                    correctLogin=true;
+                } else {
+                    System.out.println("Invalid login or password...");
+                }
             }
-            else{
-                return sessionFactory.createUserSession(user);
+            else {
+                System.out.println("Invalid login or password...");
             }
         }
-        else{
-            System.out.println("Błedne dane");
+        if (user.getRoleId() == ADMIN_ROLE) {
+            return sessionFactory.createAdminSession(user);
+        } else {
+            return sessionFactory.createUserSession(user);
         }
-        return null;
     }
 }
