@@ -3,6 +3,7 @@ package com.project.dp.Sessions;
 import com.project.dp.Entities.Users;
 import com.project.dp.Exceptions.Classes.InvalidCommandException;
 import com.project.dp.Filter.Filter;
+import com.project.dp.Filter.QueryType;
 import com.project.dp.Management.BaseManagement;
 import com.project.dp.Management.RoleStrategy;
 import com.project.dp.Management.StrategyContext;
@@ -23,21 +24,19 @@ import java.util.List;
 public class AdminSession implements Session{
 
     Users user;
-    private final Filter f = new Filter();
+    private final QueryType queryType;
     private final BaseManagement baseManagement;
     StrategyContext strategyContext;
     RoleStrategy roleStrategy;
     UserStrategy userStrategy;
 
-    @PersistenceContext
-    EntityManager entityManager;
-
     @Autowired
-    public AdminSession(BaseManagement baseManagement, StrategyContext strategyContext, RoleStrategy roleStrategy, UserStrategy userStrategy) {
+    public AdminSession(BaseManagement baseManagement, StrategyContext strategyContext, RoleStrategy roleStrategy, UserStrategy userStrategy, QueryType queryType) {
         this.baseManagement = baseManagement;
         this.strategyContext = strategyContext;
         this.roleStrategy = roleStrategy;
         this.userStrategy = userStrategy;
+        this.queryType = queryType;
     }
 
     @Override
@@ -53,8 +52,7 @@ public class AdminSession implements Session{
             //query
             if (len == 1 && c[0].equals("q")) {
                 Scanner sc = new Scanner(System.in);
-                Query q = entityManager.createNativeQuery(f.filter(sc.nextLine(),user.getUserId()));
-                List<Object[]> res = q.getResultList();
+                List<Object[]> res = queryType.query(sc.nextLine(),user.getUserId());
                 int reslen = 0;
                 if (!res.isEmpty()) {
                     reslen = res.get(0).length;

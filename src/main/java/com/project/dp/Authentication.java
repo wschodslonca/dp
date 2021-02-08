@@ -27,11 +27,11 @@ public class Authentication {
         //Scanner sc= new Scanner(System.in);
         System.out.println("login:");
         //String login = sc.nextLine();
-        String login = "mkowalska";
+        String login = "pietnastak";
         Users user = usersService.findByLogin(login);
         System.out.println("passwd:");
         //String passwd = sc.nextLine();
-        String passwd = "password1";
+        String passwd = "15latzyje";
         if (user.getPassword().equals(passwd)){
             if (user.getRoleId() == ADMIN_ROLE){
                 return sessionFactory.getAdminSession(user);
