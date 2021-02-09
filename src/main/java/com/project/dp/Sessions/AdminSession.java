@@ -141,7 +141,7 @@ public class AdminSession implements Session{
     @Override
     public void run() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Admin "+user.getLogin()+" Session");
+        System.out.println("Welcome "+user.getLogin()+"! (Admin Session)");
         boolean exit = false;
         while(!exit) {
             System.out.print("> ");

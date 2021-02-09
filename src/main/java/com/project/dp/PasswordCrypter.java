@@ -1,8 +1,6 @@
 package com.project.dp;
 
-import java.io.UnsupportedEncodingException;
 import java.security.*;
-import java.util.Arrays;
 import java.util.Base64;
 
 

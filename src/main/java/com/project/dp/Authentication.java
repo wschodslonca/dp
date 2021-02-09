@@ -30,6 +30,9 @@ public class Authentication {
             Scanner sc= new Scanner(System.in);
             System.out.println("login:");
             String login = sc.nextLine();
+            if (login.equals("exit")) {
+                System.exit(0);
+            }
             //String login = "pietnastak";
             user = usersService.findByLogin(login);
             System.out.println("passwd:");

@@ -62,7 +62,6 @@ public class UserSession implements Session{
             }
         }
         catch (Exception e) {
-            System.out.println(e.getMessage());
             throw new InvalidCommandException();
         }
     }
@@ -70,7 +69,7 @@ public class UserSession implements Session{
     @Override
     public void run() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("User "+user.getLogin()+" Session");
+        System.out.println("Welcome "+user.getLogin()+"! (User Session)");
         boolean exit = false;
         while(!exit) {
             System.out.print("> ");
