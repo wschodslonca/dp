@@ -29,21 +29,40 @@ public class UserSession implements Session{
             int len = c.length;
 
             c = command.split(" ");
-            if (c[0].toLowerCase().equals("select")) {
-                List<Object[]> res = queryType.query(command, user.getUserId());
-                int reslen = 0;
+
+            //man
+            if (len==1 && c[0].equals("man")) {
+                System.out.println("select... - start query with it");
+                System.out.println("exit - logout");
+            }
+
+            else if (c[0].toLowerCase().equals("select")) {
+                List<Object[]> res = queryType.query(command,user.getUserId());
                 if (!res.isEmpty()) {
-                    reslen = res.get(0).length;
-                }
-                for (Object[] o : res) {
-                    for (int i = 0; i < reslen; i++) {
-                        System.out.print(o[i] + " ");
+                    if (res.get(0) instanceof Object[]) {
+                        int reslen = 0;
+                        reslen = res.get(0).length;
+                        for (Object[] o : res) {
+                            for (int i = 0; i < reslen; i++) {
+                                System.out.print(o[i] + " ");
+                            }
+                            System.out.println();
+                        }
                     }
-                    System.out.println();
+                    else {
+                        for (Object o : res) {
+                            System.out.println(o);
+                        }
+                    }
                 }
+            }
+            // failure
+            else {
+                throw new InvalidCommandException();
             }
         }
         catch (Exception e) {
+            System.out.println(e.getMessage());
             throw new InvalidCommandException();
         }
     }
@@ -54,6 +73,7 @@ public class UserSession implements Session{
         System.out.println("User "+user.getLogin()+" Session");
         boolean exit = false;
         while(!exit) {
+            System.out.print("> ");
             String command = sc.nextLine();
             if (!command.equals("exit")) {
                 try {

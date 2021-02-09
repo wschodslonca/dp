@@ -45,16 +45,36 @@ public class AdminSession implements Session{
             if (len == 1 && c[0].equals("q")) {
                 Scanner sc = new Scanner(System.in);
                 List<Object[]> res = queryType.query(sc.nextLine(),user.getUserId());
-                int reslen = 0;
                 if (!res.isEmpty()) {
-                    reslen = res.get(0).length;
-                }
-                for (Object[] o: res) {
-                    for (int i=0;i<reslen;i++) {
-                        System.out.print(o[i]+" ");
+                    if (res.get(0) instanceof Object[]) {
+                        int reslen = 0;
+                        reslen = res.get(0).length;
+                        for (Object[] o : res) {
+                            for (int i = 0; i < reslen; i++) {
+                                System.out.print(o[i] + " ");
+                            }
+                            System.out.println();
+                        }
                     }
-                    System.out.println();
+                    else {
+                        for (Object o : res) {
+                            System.out.println(o);
+                        }
+                    }
                 }
+            }
+            //man
+            else if (len==1 && c[0].equals("man")) {
+                System.out.println("tree - prints tree of roles and users");
+                System.out.println("q - insert query mode");
+                System.out.println("gainacc [-R|-U] [-s] <roleid/userid> <tabname> <rowid> - gain access");
+                System.out.println("rmacc [-R|-U] [-s] <roleid/userid> <tabname> <rowid> - remove access");
+                System.out.println("addrole <parentid> <name> - adds role");
+                System.out.println("deleterole <roleid> - deletes role");
+                System.out.println("adduser <employeeid> <login> <passwd> <roleid> - adds user");
+                System.out.println("deleteuser <userid> - deletes user");
+                System.out.println("changerole <userid> <newrole> - changes role of user");
+                System.out.println("exit - logout");
             }
 
             //tree
@@ -124,6 +144,7 @@ public class AdminSession implements Session{
         System.out.println("Admin "+user.getLogin()+" Session");
         boolean exit = false;
         while(!exit) {
+            System.out.print("> ");
             String command = sc.nextLine();
             if (!command.equals("exit")) {
                 try {

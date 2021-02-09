@@ -11,6 +11,7 @@ public class Filter {
     static Set<String> KEY_TABLES = keyTableCollection.getNamesSet();
     static Map<String,String> PRIMARY_KEY_MAP = keyTableCollection.primaryKeyMap;
     static Map<String,String> KEY_TABLE_NAMES_MAP = keyTableCollection.getKeyTableNames();
+    private static final Long TEST_USER_ID = 1L;
 
     public String filter(String q, Long users_id) {
         QueryBuilder qb = new QueryBuilder();
@@ -49,7 +50,10 @@ public class Filter {
             }
         }
         String res = qb.build();
-        System.out.println(res);
+
+        if (users_id.equals(TEST_USER_ID)) {
+            System.out.println(res);
+        }
         return res;
     }
 
