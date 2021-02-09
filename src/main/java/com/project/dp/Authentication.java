@@ -2,8 +2,10 @@ package com.project.dp;
 
 import com.project.dp.Entities.Users;
 import com.project.dp.Services.UsersService;
+import com.project.dp.Sessions.AdminSessionFactory;
 import com.project.dp.Sessions.Session;
 import com.project.dp.Sessions.SessionFactory;
+import com.project.dp.Sessions.UserSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,13 +15,15 @@ import java.util.Scanner;
 public class Authentication {
 
     private static final int ADMIN_ROLE = 1;
-    private final SessionFactory sessionFactory;
+    private final AdminSessionFactory adminSessionFactory;
+    private final UserSessionFactory userSessionFactory;
     private final UsersService usersService;
 
 
     @Autowired
-    public Authentication(SessionFactory sessionFactory, UsersService usersService) {
-        this.sessionFactory = sessionFactory;
+    public Authentication(AdminSessionFactory adminSessionFactory, UserSessionFactory userSessionFactory, UsersService usersService) {
+        this.adminSessionFactory = adminSessionFactory;
+        this.userSessionFactory = userSessionFactory;
         this.usersService = usersService;
     }
 
@@ -48,9 +52,9 @@ public class Authentication {
             }
         }
         if (user.getRoleId() == ADMIN_ROLE) {
-            return sessionFactory.createAdminSession(user);
+            return adminSessionFactory.createSession(user);
         } else {
-            return sessionFactory.createUserSession(user);
+            return userSessionFactory.createSession(user);
         }
     }
 }
