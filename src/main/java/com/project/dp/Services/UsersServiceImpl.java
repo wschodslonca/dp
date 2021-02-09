@@ -64,4 +64,17 @@ public class UsersServiceImpl implements UsersService{
         return this.usersDao.findAllByRoleId(roleId);
     }
 
+    @Override
+    public void changeRole(Long userId, Long roleId){
+        Optional<Users> userOptional = this.usersDao.findById(userId);
+        if (userOptional.isEmpty()){
+            throw new NoSuchUserException();
+        }
+        else{
+            Users user = userOptional.get();
+            user.setRoleId(roleId);
+        }
+
+    }
+
 }

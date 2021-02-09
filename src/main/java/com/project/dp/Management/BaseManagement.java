@@ -80,6 +80,16 @@ public class BaseManagement extends Management{
             System.out.println("No such role in database");
         }
     }
+
+    public void changeUserRole(Long userid, Long roleid){
+        try{
+            usersService.changeRole(userid, roleid);
+            tree.changeUserRole(userid, roleid);
+        }catch (NoSuchUserException | NoSuchRoleException e){
+            System.out.println("No such user or role in database");
+        }
+    }
+
     public void printTree() {
         tree.printTree();
     }

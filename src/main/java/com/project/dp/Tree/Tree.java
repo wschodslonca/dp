@@ -173,4 +173,16 @@ public class Tree {
             throw e;
         }
     }
+
+    public void changeUserRole(Long userid, Long roleid){
+        try {
+            TreeUser user = searchTreeByUser(userid);
+            TreeRole role = searchTreeByRole(roleid);
+            user.getRole().abandonChild(user);
+            role.addChild(user);
+            user.setRole(role);
+        }catch (NoSuchUserException | NoSuchRoleException e){
+            throw e;
+        }
+    }
 }
