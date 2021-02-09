@@ -16,7 +16,8 @@ public enum ExceptionMessages {
     ACL_ALREADY_EXISTS("ACL already exists"),
     EMPLOYEE_ALREADY_EXISTS("Employee already exists"),
     ROLE_ALREADY_EXISTS("Role already exists"),
-    INVALID_COMMAND("Invalid command");
+    INVALID_COMMAND("Invalid command"),
+    ADMIN_ROLE_PROTECTED("Unable to delete admin role");
     @Getter
     @Setter
     private String errorMessage;

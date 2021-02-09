@@ -2,10 +2,7 @@ package com.project.dp.Management;
 
 import com.project.dp.Entities.Roles;
 import com.project.dp.Entities.Users;
-import com.project.dp.Exceptions.Classes.NoSuchRoleException;
-import com.project.dp.Exceptions.Classes.NoSuchUserException;
-import com.project.dp.Exceptions.Classes.RoleAlreadyExistsException;
-import com.project.dp.Exceptions.Classes.UserAlreadyExistsException;
+import com.project.dp.Exceptions.Classes.*;
 import com.project.dp.PasswordCrypter;
 import com.project.dp.Services.RolesService;
 import com.project.dp.Services.UsersService;
@@ -74,11 +71,10 @@ public class BaseManagement extends Management{
 
     public void deleteRole(Long roleid){
         try{
-
             rolesService.deleteRole(roleid);
             tree.deleteRole(roleid);
-        }catch (NoSuchRoleException e){
-            System.out.println("No such role in database");
+        }catch (NoSuchRoleException | AdminRoleProtectedException e){
+            System.out.println(e.getMessage());
         }
     }
 

@@ -1,6 +1,7 @@
 package com.project.dp.Services;
 
 import com.project.dp.Entities.Roles;
+import com.project.dp.Exceptions.Classes.AdminRoleProtectedException;
 import com.project.dp.Exceptions.Classes.NoSuchRoleException;
 import com.project.dp.Exceptions.Classes.RoleAlreadyExistsException;
 import com.project.dp.Dao.RolesDao;
@@ -43,14 +44,19 @@ public class RolesServiceImpl implements RolesService{
     }
 
     @Override
-    public void deleteRole(Long roleId) throws NoSuchRoleException {
+    public void deleteRole(Long roleId) throws NoSuchRoleException, AdminRoleProtectedException {
         Optional<Roles> roleOptional = this.rolesDao.findById(roleId);
         if (roleOptional.isEmpty()){
             throw new NoSuchRoleException();
         }
         else{
             Roles role = roleOptional.get();
-            this.rolesDao.delete(role);
+            if (role.getParentId() == 0){
+                throw new AdminRoleProtectedException();
+            }
+            else{
+                this.rolesDao.delete(role);
+            }
         }
     }
 
