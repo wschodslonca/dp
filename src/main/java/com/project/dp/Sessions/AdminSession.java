@@ -104,8 +104,6 @@ public class AdminSession implements Session{
             else if (len==2 && c[0].equals("deleterole")) {
                 this.baseManagement.deleteRole(Long.parseLong(c[1]));
             }
-            else if (len==1 && c[0].equals("exit")) {
-            }
 
             // failure
             else {

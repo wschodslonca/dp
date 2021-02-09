@@ -6,6 +6,7 @@ import com.project.dp.Exceptions.Classes.NoSuchRoleException;
 import com.project.dp.Exceptions.Classes.NoSuchUserException;
 import com.project.dp.Exceptions.Classes.RoleAlreadyExistsException;
 import com.project.dp.Exceptions.Classes.UserAlreadyExistsException;
+import com.project.dp.PasswordCrypter;
 import com.project.dp.Services.RolesService;
 import com.project.dp.Services.UsersService;
 import com.project.dp.Tree.Tree;
@@ -28,7 +29,7 @@ public class BaseManagement extends Management{
 
     public void addUser(Long employeeid, String login, String passwd, Long roleid){
         try {
-            Users user = Users.builder().employeeId(employeeid).login(login).password(passwd).roleId(roleid).build();
+            Users user = Users.builder().employeeId(employeeid).login(login).password(PasswordCrypter.md5(passwd)).roleId(roleid).build();
             if (this.rolesService.getRole(roleid)!=null) {
                 usersService.addUser(user);
                 tree.addUser(user);

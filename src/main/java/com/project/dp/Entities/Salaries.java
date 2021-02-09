@@ -21,7 +21,7 @@ public class Salaries {
     private Long rowId;
 
     @NotNull
-    private Long employeeId;
+    private Long empId;
 
     @NotNull
     private int salary;

@@ -5,7 +5,7 @@ import java.util.*;
 
 public class KeyTableCollection {
 
-    List<String> keyTableNames = new ArrayList<>();
+    Map<String,String> keyTableNames = new HashMap<>();
     List<KeyTable> keyTables = new ArrayList<>();
     Map<String,String> primaryKeyMap = new HashMap<>();
     Set<String> namesSet = new HashSet<>();
@@ -15,8 +15,8 @@ public class KeyTableCollection {
         keyTables.add(new KeyTable("employees","employee_id"));
 
         for (KeyTable k : keyTables) {
-            keyTableNames.add(k.tableName);
             for (String s : k.getCombinations()) {
+                keyTableNames.put(s,k.getTableName());
                 primaryKeyMap.put(s,k.primaryKey);
                 namesSet.add(s);
             }
@@ -26,7 +26,7 @@ public class KeyTableCollection {
     public Map<String,String> getPrimaryKeyMap() {
         return this.primaryKeyMap;
     }
-    public List<String> getKeyTableNames() {
+    public Map<String,String> getKeyTableNames() {
         return this.keyTableNames;
     }
     public Set<String> getNamesSet() {
