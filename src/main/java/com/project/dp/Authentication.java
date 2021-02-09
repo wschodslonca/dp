@@ -33,11 +33,9 @@ public class Authentication {
             if (login.equals("exit")) {
                 System.exit(0);
             }
-            //String login = "pietnastak";
             user = usersService.findByLogin(login);
             System.out.println("passwd:");
             String passwd = sc.nextLine();
-            //String passwd = "15latzyje";
             if (user != null) {
                 if (user.getPassword().equals(PasswordCrypter.md5(passwd))) {
                     correctLogin=true;

@@ -14,7 +14,7 @@ public class DpApplication implements CommandLineRunner {
 	@Autowired
 	Authentication auth;
 
-	public static void main(String args[]) {
+	public static void main(String[] args) {
 		SpringApplication.run(DpApplication.class, args);
 	}
 

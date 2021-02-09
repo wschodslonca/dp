@@ -33,7 +33,7 @@ public class UserSession implements Session{
             //man
             if (len==1 && c[0].equals("man")) {
                 System.out.println("select... - start query with it");
-                System.out.println("exit - logout");
+                System.out.println("logout - logout");
             }
 
             else if (c[0].toLowerCase().equals("select")) {
@@ -74,7 +74,7 @@ public class UserSession implements Session{
         while(!exit) {
             System.out.print("> ");
             String command = sc.nextLine();
-            if (!command.equals("exit")) {
+            if (!command.equals("logout")) {
                 try {
                     executeCommand(command);
                 } catch (InvalidCommandException e) {

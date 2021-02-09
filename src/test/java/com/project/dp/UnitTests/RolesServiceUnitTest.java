@@ -2,6 +2,7 @@ package com.project.dp.UnitTests;
 
 import com.project.dp.Dao.RolesDao;
 import com.project.dp.Entities.Roles;
+import com.project.dp.Exceptions.Classes.AdminRoleProtectedException;
 import com.project.dp.Exceptions.Classes.NoSuchRoleException;
 import com.project.dp.Exceptions.Classes.RoleAlreadyExistsException;
 import com.project.dp.Services.RolesServiceImpl;
@@ -80,11 +81,11 @@ public class RolesServiceUnitTest {
 
     @Test
     void deleteRoleTest() {
-        Optional<Roles> optionalRole = Optional.of(role);
+        Optional<Roles> optionalRole = Optional.of(role1);
 
-        when(rolesDao.findById(roleId)).thenReturn(optionalRole);
+        when(rolesDao.findById(2L)).thenReturn(optionalRole);
 
-        rolesService.deleteRole(roleId);
+        rolesService.deleteRole(2L);
 
         Mockito.verify(rolesDao, times(1)).delete(optionalRole.get());
     }
@@ -93,5 +94,11 @@ public class RolesServiceUnitTest {
     void deleteRoleNoSuchRoleExceptionTest(){
         when(rolesDao.findById(roleId)).thenReturn(Optional.empty());
         assertThrows(NoSuchRoleException.class, () -> rolesService.deleteRole(roleId));
+    }
+
+    @Test
+    void deleteRoleAdminRoleProtectedExceptionTest(){
+        when(rolesDao.findById(roleId)).thenReturn(Optional.ofNullable(role));
+        assertThrows(AdminRoleProtectedException.class, () -> rolesService.deleteRole(roleId));
     }
 }

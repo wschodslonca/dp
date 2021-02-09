@@ -74,7 +74,7 @@ public class AdminSession implements Session{
                 System.out.println("adduser <employeeid> <login> <passwd> <roleid> - adds user");
                 System.out.println("deleteuser <userid> - deletes user");
                 System.out.println("changerole <userid> <newrole> - changes role of user");
-                System.out.println("exit - logout");
+                System.out.println("logout - logout");
             }
 
             //tree
@@ -146,7 +146,7 @@ public class AdminSession implements Session{
         while(!exit) {
             System.out.print("> ");
             String command = sc.nextLine();
-            if (!command.equals("exit")) {
+            if (!command.equals("logout")) {
                 try {
                     executeCommand(command);
                 } catch (InvalidCommandException e) {
