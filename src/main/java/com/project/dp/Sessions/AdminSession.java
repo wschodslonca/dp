@@ -107,8 +107,6 @@ public class AdminSession implements Session{
             else if (len==3 && c[0].equals("changerole")) {
                 this.baseManagement.changeUserRole(Long.parseLong(c[1]), Long.parseLong(c[2]));
             }
-            else if (len==1 && c[0].equals("exit")) {
-            }
 
             // failure
             else {

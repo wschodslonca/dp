@@ -6,8 +6,11 @@ import java.util.*;
 @Component
 public class Filter {
 
+    static KeyTableCollection keyTableCollection = new KeyTableCollection();
     static Set<String> FORBIDDEN_TABLES = new HashSet<>(Arrays.asList("acl", "roles","users","public.acl", "public.roles","public.users"));
-    static Set<String> KEY_TABLES = new HashSet<>(Arrays.asList("salaries","employees","public.salaries","public.employees"));
+    static Set<String> KEY_TABLES = keyTableCollection.getNamesSet();
+    static Map<String,String> PRIMARY_KEY_MAP = keyTableCollection.primaryKeyMap;
+    static Map<String,String> KEY_TABLE_NAMES_MAP = keyTableCollection.getKeyTableNames();
 
     public String filter(String q, Long users_id) {
         QueryBuilder qb = new QueryBuilder();
@@ -24,17 +27,19 @@ public class Filter {
                     return "";
                 }
                 if (KEY_TABLES.contains(comp)) {
+                    String pkey = PRIMARY_KEY_MAP.get(comp);
+                    String name = KEY_TABLE_NAMES_MAP.get(comp);
                     if (i+2>size) {
-                        qb.buildSubQuery(comp,users_id);
+                        qb.buildSubQuery(name,users_id,pkey);
                     }
                     else {
                         if (wordList.get(i+1).equals("as")) {
                             String alias = wordList.get(i+2);
-                            qb.buildSubQueryWithAlias(comp,users_id,alias);
+                            qb.buildSubQueryWithAlias(name,users_id,pkey,alias);
                             i+=2;
                         }
                         else {
-                            qb.buildSubQuery(comp,users_id);
+                            qb.buildSubQuery(name,users_id,pkey);
                         }
                     }
                 }

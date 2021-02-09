@@ -73,6 +73,7 @@ public class UsersServiceImpl implements UsersService{
         else{
             Users user = userOptional.get();
             user.setRoleId(roleId);
+            this.usersDao.save(user);
         }
 
     }

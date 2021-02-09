@@ -36,7 +36,7 @@ public class Authentication {
             String passwd = sc.nextLine();
             //String passwd = "15latzyje";
             if (user != null) {
-                if (user.getPassword().equals(passwd)) {
+                if (user.getPassword().equals(PasswordCrypter.md5(passwd))) {
                     correctLogin=true;
                 } else {
                     System.out.println("Invalid login or password...");
